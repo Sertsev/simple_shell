@@ -1,7 +1,5 @@
 #include "simishell.h"
 
-int cater(char *line[]);
-
 /**
  * exitor - a function to exit from the program
  * @line: an array of command and arguments
@@ -11,37 +9,37 @@ int cater(char *line[]);
 
 int exitor(char *line[])
 {
+        int i = 0;
+        if (line[1] == NULL)
+                exit(EXIT_SUCCESS);
+        else if (atoi(line[1]) > 0)
+                i = atoi(line[1]);
         free(line);
-        exit(EXIT_SUCCESS);
+        exit(i);
 }
 
 /**
- * lister - a function which excutes the /bin/ls program to list files
- * @line: an array of command and arguments
+ * changedir - a function to change a directory
+ * @line: an array of commands and arguments
  * 
- * Return: returns 1 in success and -1 if it fails
+ * Return: returns 0 in success and -1 if it fails
  */
 
-int lister(char *line[])
+int changedire(char **line)
 {
-        int status;
-        pid_t waiter, child;
-        int i = 0;
-        
-        child = fork();
-        if (child == -1)
-                perror("Forking");
-        
-        if (child == 0)
+        if (line[1] == NULL)
+                chdir(getenv("HOME"));
+        else if (chdir(line[1]) == -1)
         {
-                execve("/bin/ls", line, NULL);
+                write(1, line[0], strleng(line[0]));
+                write(1, ": ", 3);
+                write(1, ": cd", strleng(": cd"));
+                write(1, ": can't cd to ", strleng(": can't cd to "));
+                write(1, line[1], strleng(line[1]));
+                write(1, "\n", 2);
+                return (-1);
         }
-        else
-        {
-                waiter = wait(&status);
-                if (waiter == -1)
-                        perror("Waiting");
-        }
+
         free(line);
         return (1);
 }
@@ -58,25 +56,27 @@ int (*getfunc(char *str))(char **line)
 {
         int i = 0;
         selecte selector[] = {
-                {"ls", lister},
-                {"l", lister},
-                {"/bin/ls", lister},
-                {"exit", exitor},
-                {"echo", echoer},
-                {"/bin/echo", echoer},
-                {"cat", cater},
-                {"/bin/cat", cater},
-                {NULL, NULL}
-        };
-       //printf("get [%s] [%s] %d\n", str, selector[i].command, i);
-
+            {"ls", lister},
+            {"l", lister},
+            {"ll", lister},
+            {"exit", exitor},
+            {"echo", echorr},
+            {"cd", changedire},
+            {"cat", cater},
+            {"pwd", pwder},
+            {"env", envir},
+            {"printenv", envir},
+            {"/bin/printenv", envir},
+            {"/bin/env", envir},
+            {"mkdir", maker},
+            {NULL, NULL}};
         while (!strcomp(selector[i].command, str) && (selector[i].command != NULL))
                 i++;
 
-        //printf("get %s %d\n", selector[i].command, i);
-
         if (selector[i].command == NULL)
-                return NULL;
+        {
+                return (NULL);
+        }
 
         return selector[i].funcptr;
 }
@@ -88,22 +88,46 @@ int (*getfunc(char *str))(char **line)
  * Return: returns 1 in success and -1 if it fails
  */
 
-int shellprocessor(char **line)
+int shellprocessor(char **line, char **argv)
 {
         int check;
         int i = 0;
 
         if (!line)
                 return (1);
-        // while(line[i] != NULL)
-        //         printf("shell %s\n", line[i++]);
 
         if (getfunc(line[0]) == NULL)
-                printf("%s: command not found\n", line[0]);
+        {
+                i = builtincom(line);
+                if (i != 0)
+                {
+                        for (i = 0; line[0][i] != '\0'; i++)
+                        {
+                                if (line[0][i] == '/')
+                                {
+                                        check = 1;
+                                        break;
+                                }
+                        }
+                        if (check == 1)
+                        {
+                                write(1, argv[0], strleng(argv[0]));
+                                write(1, ": ", 3);
+                                write(1, line[0], strleng(line[0]));
+                                write(1, ": No such file or directory\n", strleng(": No such file or directory\n"));
+                                exit(EXIT_FAILURE);
+                        }
+                        else
+                        {
+                                write(1, line[0], strleng(line[0]));
+                                write(1, ": not found\n", strleng(": not found\n"));
+                                exit(EXIT_FAILURE);
+                        }
+                }
+        }
         else
                 getfunc(line[0])(line);
 
-        
         return (1);
 }
 
@@ -117,7 +141,7 @@ int shellprocessor(char **line)
 void printprompt(int i)
 {
         if (i == 0)
-                printf("USH$ ");
-        else if(i == 1)
-                printf("ush> ");
+                write(1, "USH$ ", strleng("USH$ "));
+        else if (i == 1)
+                write(1, "ush> ", strleng("ush> "));
 }

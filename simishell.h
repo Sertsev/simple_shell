@@ -9,19 +9,23 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <signal.h>
 
+extern char **environ;
 extern int errno;
+
 
 typedef struct selectfunction {
         char *command;
         int (*funcptr)(char **line);
 } selecte;
 
+void sigintHandler(int sig_num __attribute__((unused)));
 void printprompt(int i);
 int exitor(char *line[]);
 int cater(char *line[]);
 int getstr (char *str);
-int shellprocessor(char **line);
+int shellprocessor(char **line, char **argv);
 char **strbrk(char *line);
 void farewell();
 void description();
@@ -33,6 +37,11 @@ int strcomp(char *str, char *equ);
 void strmix(char *src, char *dest);
 int lister(char **line);
 int (*getfunc(char *str))(char **line);
-int echoer(char *line[]);
+int echorr(char *line[]);
+int builtincom(char **line);
+int changedire(char **line);
+int pwder(char *line[]);
+int envir(char *line[]);
+int maker(char *line[]);
 
 #endif

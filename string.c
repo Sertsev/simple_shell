@@ -11,7 +11,7 @@ int getstr(char *str)
 {
         char **line;
         size_t siz = 0;
-        
+       signal(SIGINT, sigintHandler); 
         line = malloc(24);
         if (!line)
         {
@@ -20,7 +20,7 @@ int getstr(char *str)
         
         printprompt(0);
         
-        if ((siz =  getline(line, &siz, stdin)) == -1)
+        if ((siz =  getline(line, &siz, stdin)) == (size_t)-1)
         {
                 return (-1);
         }
@@ -36,9 +36,9 @@ int getstr(char *str)
                         siz = 0;
                         printprompt(1);
 
-                        if ((siz =  getline(line, &siz, stdin)) == -1)
+                        if ((siz =  getline(line, &siz, stdin)) == (size_t)-1)
                         {
-                                                return (-1);
+                            return (-1);
                         }
                         line[0][siz] = '\0';
 
