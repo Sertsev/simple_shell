@@ -24,6 +24,12 @@ char _getchar()
         perror("Reading Char");
         return (-1);
     }
+    else if (i == 0)
+    {
+        write(1, "\n", 2);
+        fflush(stdout);
+        exit(1);
+    }
     
     c = *buf;
     
@@ -38,9 +44,9 @@ char _getchar()
  * Return: returns the size of the read string
  */
 
-int _getline(char **restrict line, size_t *restrict len)
+int _getline(char **line, size_t *len)
 {
-    int limit = 25;
+    size_t limit = 25;
     char *tmp;
 
     line[0] = malloc(25);

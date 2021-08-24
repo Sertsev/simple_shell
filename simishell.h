@@ -27,6 +27,7 @@ int cater(char *line[]);
 int getstr (char *str);
 int shellprocessor(char **line, char **argv);
 char **strbrk(char *line);
+int _getline(char **line, size_t *len);
 void farewell();
 void description();
 void printstar();
@@ -43,5 +44,6 @@ int changedire(char **line);
 int pwder(char *line[]);
 int envir(char *line[]);
 int maker(char *line[]);
+char _getchar();
 
 #endif
