@@ -9,168 +9,166 @@
 
 int lister(char *line[])
 {
-        int status;
-        pid_t waiter, child;
-        
-        child = fork();
-        if (child == -1)
-                perror("Forking");
-        
-        if (child == 0)
-        {
-                execve("/bin/ls", line, NULL);
-        }
-        else
-        {
-                waiter = wait(&status);
-                if (waiter == -1)
-                        perror("Waiting");
-        }
-        free(line);
-        return (1);
+int status;
+pid_t waiter, child;
+
+child = fork();
+if (child == -1)
+{
+perror("Forking");
 }
 
-/**
- * echoer - a function to echo back any text you gave it
- * @line: an array of command and arguments
- * 
- * Return: returns 1 in success and -1 if it fails
- */
-
-int echoer(char *line[])
+if (child == 0)
 {
-        int i = 1;
+execve("/bin/ls", line, NULL);
+}
+else
+{
+waiter = wait(&status);
+if (waiter == -1)
+{
+perror("Waiting");
+}
+}
+free(line);
 
-        if (line[i] == NULL)
-        {
-                write(1, "\n", 2);
-                return (1);
-        }
-
-        while (line[i] != NULL)
-        {
-                write(1, line[i], strleng(line[i]));
-                i++;
-                if (line[i] != NULL)
-                        write(1, " ", 2);
-        }
-        write(1, "\n", 2);
-        return (1);
+return (1);
 }
 
 /**
  * cater - a function which excutes the /bin/cat program to show text files
  * @line: an array of command and arguments
- * 
+ *
  * Return: returns 1 in success and -1 if it fails
  */
 
 int cater(char *line[])
 {
-        int status;
-        pid_t waiter, child;
-        
-        child = fork();
-        if (child == -1)
-                perror("Forking");
-        
-        if (child == 0)
-        {
-                execve("/bin/cat", line, NULL);
-        }
-        else
-        {
-                waiter = wait(&status);
-                if (waiter == -1)
-                        perror("Waiting");
-        }
-        free(line);
-        return (1);
+int status;
+pid_t waiter, child;
+
+child = fork();
+if (child == -1)
+{
+perror("Forking");
+}
+if (child == 0)
+{
+execve("/bin/cat", line, NULL);
+}
+else
+{
+waiter = wait(&status);
+if (waiter == -1)
+{
+perror("Waiting");
+}
+}
+free(line);
+
+return (1);
 }
 
 /**
- * 
- * 
+ * builtincom - a function to excute when unlisted command entered
+ * @line: is a pointer to pointer of characters
+ *
+ * Return: returns an integer
  */
 
 int builtincom(char **line)
 {
-        int status;
-        pid_t waiter, child;
-        
-        child = fork();
-        if (child == -1)
-                perror("Forking");
+int status;
+pid_t waiter, child;
 
-        if (child == 0)
-        {
-                execve(line[0], line, NULL);
-                if (errno != 0)
-                {
-                        return (errno);
-                }
-        }
-        else
-        {
-                waiter = wait(&status);
-                if (waiter == -1)
-                        perror("Waiting");
-        }
+child = fork();
+if (child == -1)
+{
+perror("Forking");
+}
 
-        free(line);
-        return (0);
+if (child == 0)
+{
+execve(line[0], line, NULL);
+if (errno != 0)
+{
+return (errno);
+}
+}
+else
+{
+waiter = wait(&status);
+
+if (waiter == -1)
+{
+perror("Waiting");
+}
+}
+
+free(line);
+return (0);
 }
 
 /**
- * powder - a function which excutes the /bin/ls program to list files
+ * pwder - a function which prints the current path
  * @line: an array of command and arguments
- * 
+ *
  * Return: returns 1 in success and -1 if it fails
  */
 
 int pwder(char *line[])
 {
-        int status;
-        pid_t waiter, child;
-        
-        child = fork();
-        if (child == -1)
-                perror("Forking");
-        
-        if (child == 0)
-        {
-                execve("/bin/pwd", line, NULL);
-        }
-        else
-        {
-                waiter = wait(&status);
-                if (waiter == -1)
-                        perror("Waiting");
-        }
-        free(line);
-        return (1);
+int status;
+pid_t waiter, child;
+
+child = fork();
+if (child == -1)
+perror("Forking");
+
+if (child == 0)
+{
+execve("/bin/pwd", line, NULL);
+}
+else
+{
+waiter = wait(&status);
+if (waiter == -1)
+perror("Waiting");
+}
+free(line);
+return (1);
 }
 
+/**
+ * echorr - a function which echo back any text
+ * @line: an array of command and arguments
+ *
+ * Return: returns 1 in success and -1 if it fails
+ */
 
 int echorr(char *line[])
 {
-        int status;
-        pid_t waiter, child;
-        
-        child = fork();
-        if (child == -1)
-                perror("Forking");
-        
-        if (child == 0)
-        {
-                execve("/bin/echo", line, NULL);
-        }
-        else
-        {
-                waiter = wait(&status);
-                if (waiter == -1)
-                        perror("Waiting");
-        }
-        free(line);
-        return (1);
+int status;
+pid_t waiter, child;
+
+child = fork();
+if (child == -1)
+{
+perror("Forking");
+}
+if (child == 0)
+{
+execve("/bin/echo", line, NULL);
+}
+else
+{
+waiter = wait(&status);
+if (waiter == -1)
+{
+perror("Waiting");
+}
+}
+free(line);
+
+return (1);
 }

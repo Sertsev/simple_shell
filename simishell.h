@@ -14,23 +14,29 @@
 extern char **environ;
 extern int errno;
 
+/**
+ * struct selectfunction - a struct array of functions
+ * @command: a pointer to the caharacter of the command string
+ * @funcptr: a pointer to a function
+ */
 
-typedef struct selectfunction {
-        char *command;
-        int (*funcptr)(char **line);
+typedef struct selectfunction
+{
+char *command;
+int (*funcptr)(char **line);
 } selecte;
 
 void sigintHandler(int sig_num __attribute__((unused)));
 void printprompt(int i);
 int exitor(char *line[]);
 int cater(char *line[]);
-int getstr (char *str);
+int getstr(char *str);
 int shellprocessor(char **line, char **argv);
-char **strbrk(char *line);
+char **strbrk(char *line, char c);
 int _getline(char **line, size_t *len);
-void farewell();
-void description();
-void printstar();
+void farewell(void);
+void description(void);
+void printstar(void);
 void printstr(char *s);
 int strleng(char *s);
 void strcopy(char *src, char *dest);
@@ -44,6 +50,7 @@ int changedire(char **line);
 int pwder(char *line[]);
 int envir(char *line[]);
 int maker(char *line[]);
-char _getchar();
+char _getchar(void);
+char *stringer(char *line, int i, char *str, char c);
 
 #endif
