@@ -29,9 +29,6 @@ char *line;
 
 line = malloc(256);
 
-description();
-write(1, "\n", 2);
-
 do {
 if (getstr(line) == (-1))
 {
