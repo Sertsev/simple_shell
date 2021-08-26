@@ -18,8 +18,6 @@ if (!line)
 return (-1);
 }
 
-printprompt(0);
-
 if ((getline(line, &siz, stdin)) == -1)
 {
 return (-1);

@@ -9,24 +9,24 @@
 
 char **copyarray(char **line)
 {
- char **array;
- int i = 1;
+char **array;
+int i = 1;
 
- array = malloc(64);
- if (!array)
-  return (NULL);
- 
- while (line[i] != NULL)
- {
-  array[(i - 1)] = malloc(32);
-  if (!array[(i - 1)])
-   return (NULL);
+array = malloc(64);
+if (!array)
+return (NULL);
 
-  strcopy(line[i], array[(i - 1)]);
-  i++;
- }
+while (line[i] != NULL)
+{
+array[(i - 1)] = malloc(32);
+if (!array[(i - 1)])
+return (NULL);
 
- return (array);
+strcopy(line[i], array[(i - 1)]);
+i++;
+}
+
+return (array);
 }
 
 /**
@@ -52,7 +52,7 @@ fflush(stdout);
  * Return: returns an integer
  */
 
-int main(int argc, char **argv)
+int main(int argc __attribute__((unused)), char **argv)
 {
 char *line;
 
@@ -63,17 +63,20 @@ perror("Allocation");
 exit(1);
 }
 
-if (argc > 1)
+if (!isatty(STDIN_FILENO))
 {
- printstr(argv[1]);
- write(1, "\n", 2);
+if (getstr(line) == (-1))
+{
+write(1, "\n", 2);
+exit(1);
+}
 
- if (shellprocessor(copyarray(argv), argv) == -1)
- {
-  perror("Error");
-  }
+if (shellprocessor(strbrk(line, ' '), argv) == -1)
+{
+perror("Error");
+}
 
-  exit(1);
+exit(1);
 }
 
 do {
@@ -82,7 +85,7 @@ if (getstr(line) == (-1))
 write(1, "\n", 2);
 exit(1);
 }
-
+printprompt(0);
 if ((shellprocessor(strbrk(line, ' '), argv)) == -1)
 {
 perror("Error");
