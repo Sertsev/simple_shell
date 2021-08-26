@@ -1,6 +1,35 @@
 #include "simishell.h"
 
 /**
+ * copyarray - a function to copy string array to another string array variable
+ * @line: a string array to be copied
+ * 
+ * Return: returns the copied array
+ */
+
+char **copyarray(char **line)
+{
+ char **array;
+ int i = 1;
+
+ array = malloc(64);
+ if (!array)
+  return (NULL);
+ 
+ while (line[i] != NULL)
+ {
+  array[(i - 1)] = malloc(32);
+  if (!array[(i - 1)])
+   return (NULL);
+
+  strcopy(line[i], array[(i - 1)]);
+  i++;
+ }
+
+ return (array);
+}
+
+/**
  * sigintHandler - a function to handle the ctrl-c signal
  * @sig_num: an integer signal indicator
  *
@@ -23,11 +52,29 @@ fflush(stdout);
  * Return: returns an integer
  */
 
-int main(int argc __attribute__((unused)), char **argv)
+int main(int argc, char **argv)
 {
 char *line;
 
 line = malloc(256);
+if (!line)
+{
+perror("Allocation");
+exit(1);
+}
+
+if (argc > 1)
+{
+ printstr(argv[1]);
+ write(1, "\n", 2);
+
+ if (shellprocessor(copyarray(argv), argv) == -1)
+ {
+  perror("Error");
+  }
+
+  exit(1);
+}
 
 do {
 if (getstr(line) == (-1))
