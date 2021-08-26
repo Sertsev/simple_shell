@@ -20,7 +20,7 @@ return (-1);
 
 printprompt(0);
 
-if ((_getline(line, &siz)) == -1)
+if ((getline(line, &siz, stdin)) == -1)
 {
 return (-1);
 }
@@ -36,7 +36,7 @@ str[strleng(str) - 1] = ' ';
 siz = 0;
 printprompt(1);
 
-if ((_getline(line, &siz)) == -1)
+if ((getline(line, &siz, stdin)) == -1)
 {
 return (-1);
 }
