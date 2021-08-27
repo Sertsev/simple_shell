@@ -1,11 +1,11 @@
 #include "simishell.h"
 
 /**
- * getstr - a function to read a string from  the cli
- * @str: a string pointer
- *
- * Return: return 1 in success and -1 in failure
- */
+* getstr - a function to read a string from  the cli
+* @str: a string pointer
+*
+* Return: return 1 in success and -1 in failure
+*/
 
 int getstr(char *str)
 {
@@ -49,12 +49,12 @@ return (1);
 }
 
 /**
- * strcopy - a function to copy to strings
- * @src: the string to be copied
- * @dest: the destination of the copied string
- *
- * Return: returns nothing (void)
- */
+* strcopy - a function to copy to strings
+* @src: the string to be copied
+* @dest: the destination of the copied string
+*
+* Return: returns nothing (void)
+*/
 
 void strcopy(char *src, char *dest)
 {
@@ -75,8 +75,8 @@ dest[j] = '\0';
 }
 
 /**
- * strmix - a function to copy to strings and concatenate if
- *	   the destination have a string already.
+* strmix - a function to copy to strings and concatenate if
+*	   the destination have a string already.
 * @src: the string to be copied
 * @dest: the destination of the copied string
 *
@@ -106,12 +106,12 @@ dest[j] = '\0';
 }
 
 /**
- * strbrk - a function that breaks a long string in to arrauy of strings
- * @line: the string to be breakdown
- * @c: a chacter specifier where to break the string
- *
- * Return: returns the array of the words.
- */
+* strbrk - a function that breaks a long string in to arrauy of strings
+* @line: the string to be breakdown
+* @c: a chacter specifier where to break the string
+*
+* Return: returns the array of the words.
+*/
 
 char **strbrk(char *line, char c)
 {
@@ -155,11 +155,11 @@ return (array);
 }
 
 /**
- * strleng - measures a length of a string
- * @s: a string location pointer
- *
- * Return: returns length
- */
+* strleng - measures a length of a string
+* @s: a string location pointer
+*
+* Return: returns length
+*/
 
 int strleng(char *s)
 {
