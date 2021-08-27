@@ -1,11 +1,11 @@
 #include "simishell.h"
 
 /**
- * exitor - a function to exit from the program
- * @line: an array of command and arguments
- *
- * Return: no return
- */
+* exitor - a function to exit from the program
+* @line: an array of command and arguments
+*
+* Return: no return
+*/
 
 int exitor(char *line[])
 {
@@ -21,11 +21,11 @@ exit(i);
 }
 
 /**
- * changedire - a function to change a directory
- * @line: an array of commands and arguments
- *
- * Return: returns 0 in success and -1 if it fails
- */
+* changedire - a function to change a directory
+* @line: an array of commands and arguments
+*
+* Return: returns 0 in success and -1 if it fails
+*/
 
 int changedire(char **line)
 {
@@ -49,11 +49,11 @@ return (1);
 }
 
 /**
- * printprompt - a function to display the enter command character
- * @i: an integer value to indicate which icon to display
- *
- * Return: void
- */
+* printprompt - a function to display the enter command character
+* @i: an integer value to indicate which icon to display
+*
+* Return: void
+*/
 
 void printprompt(int i)
 {
