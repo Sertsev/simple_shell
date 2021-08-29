@@ -28,6 +28,7 @@ The shell returns the error code given by the last completed command followed by
 
 .SH AUTHORS
 Sertsedengle Shewandagn < https://github.com/sertsev >
+Deborah Getachew < https://github.com/DG-h1S >
 
 .SH SEE ALSO
 DASH(1)
