@@ -75,15 +75,15 @@ if (shellprocessor(strbrk(line, ' '), argv) == -1)
 perror("Error");
 }
 
-exit(1);
+exit(0);
 }
 
 do {
-  printprompt(0);
-  if (getstr(line) == (-1))
-  {
-    write(1, "\n", 2);
-    exit(1);
+printprompt(0);
+if (getstr(line) == (-1))
+{
+write(1, "\n", 2);
+exit(0);
 }
 
 if ((shellprocessor(strbrk(line, ' '), argv)) == -1)
